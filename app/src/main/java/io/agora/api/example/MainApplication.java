@@ -24,7 +24,7 @@ public class MainApplication extends Application {
         super.onCreate();
         initExamples();
         //todo --- facebeauty start
-        // #请联系商务获取美颜授权码key
+         #请联系商务获取美颜授权码key
         FBEffect.shareInstance().initFaceBeauty(getApplicationContext(), "YOUR_APP_ID", new InitCallback() {
             @Override public void onInitSuccess() {
 
