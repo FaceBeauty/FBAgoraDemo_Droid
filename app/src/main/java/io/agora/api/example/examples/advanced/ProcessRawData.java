@@ -36,6 +36,7 @@ import androidx.annotation.Nullable;
 
 import com.nimo.facebeauty.FBEffect;
 import com.nimo.facebeauty.model.FBFormatEnum;
+import com.nimo.facebeauty.model.FBItemEnum;
 import com.nimo.facebeauty.model.FBRotationEnum;
 import com.nimo.fb_effect.FBPanelLayout;
 import com.nimo.fb_effect.model.FBViewState;
@@ -44,6 +45,7 @@ import com.yanzhenjie.permission.runtime.Permission;
 
 import io.agora.api.example.common.gles.core.EglCore;
 import io.agora.api.example.common.gles.core.EglSurfaceBase;
+import io.agora.base.NV12Buffer;
 import io.agora.base.TextureBufferHelper;
 import io.agora.base.VideoFrame.Buffer;
 import io.agora.base.VideoFrame.I420Buffer;
@@ -363,8 +365,8 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
 
                     // 将 I420 转换为 NV21 格式
                     YuvHelper.I420ToNV12(i420Buffer.getDataY(), i420Buffer.getStrideY(),
-                        i420Buffer.getDataV(), i420Buffer.getStrideV(),
                         i420Buffer.getDataU(), i420Buffer.getStrideU(),
+                        i420Buffer.getDataV(), i420Buffer.getStrideV(),
                         backBuffer, width, height);
                     backBuffer.position(0);
                     backBuffer.get(backData);
@@ -374,6 +376,7 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
 
                     // 初始化渲染器
                     if (!isRenderInit) {
+                        FBEffect.shareInstance().setFaceDetectorTye(1);
                         isRenderInit = FBEffect.shareInstance().initBufferRenderer(FBFormatEnum.FBFormatNV21, width, height, FBRotationEnum.FBRotationClockwise270, isFrontCamera, 5);
                     }
 
@@ -387,7 +390,7 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
                     if (isSnapshot) {
                         isSnapshot = false;
 
-                        Bitmap bitmap = YUVUtils.nv21ToBitmap(getContext(),
+                        Bitmap bitmap = YUVUtils.nv21ToBitmap(
                             nv21,
                             width,
                             height);
@@ -411,8 +414,24 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
                     frontData = backData;
                     backData = tempData;
 
+                    int ySize = width * height;
+                    int uvSize = ySize / 2;
+
+                    byte[] yuvBuffer = new byte[frontData.length];
+                    System.arraycopy(frontData, 0, yuvBuffer, 0, width * height);
+
+                    // 处理 UV 分量，交换 U 和 V 的位置
+                    byte[] uv = new byte[uvSize];
+                    System.arraycopy(frontData, width * height, uv, 0, uvSize);
+
+                    for (int i = 0; i < uvSize; i += 2) {
+                        yuvBuffer[ySize + i] = uv[i + 1];  // V
+                        yuvBuffer[ySize + i + 1] = uv[i];  // U
+                    }
+
                     // 使用 NV21Buffer 替换视频帧的 Buffer
-                    videoFrame.replaceBuffer(new NV21Buffer(frontData, width, height, null), videoFrame.getRotation(), videoFrame.getTimestampNs());
+                    videoFrame.replaceBuffer(new NV21Buffer(yuvBuffer, width, height, null), videoFrame.getRotation(), videoFrame.getTimestampNs());
+//                    videoFrame.replaceBuffer(new NV12Buffer(width, height, width, height, frontBuffer, null), videoFrame.getRotation(), videoFrame.getTimestampNs());
 
                     return true;
 

@@ -305,4 +305,33 @@ public final class YUVUtils {
         return bmpout;
     }
 
+    public static Bitmap nv21ToBitmap(byte[] nv12, int width, int height) {
+        int frameSize = width * height;
+        int[] argb = new int[frameSize];
+
+        for (int j = 0, yp = 0; j < height; j++) {
+            int uvp = frameSize + (j >> 1) * width;
+            for (int i = 0; i < width; i++, yp++) {
+                int y = (0xff & nv12[yp]) - 16;
+                if (y < 0) y = 0;
+
+                int u = (0xff & nv12[uvp + (i & ~1)]) - 128;
+                int v = (0xff & nv12[uvp + (i & ~1) + 1]) - 128;
+
+                int r = (int)(1.164f * y + 1.596f * v);
+                int g = (int)(1.164f * y - 0.813f * v - 0.391f * u);
+                int b = (int)(1.164f * y + 2.018f * u);
+
+                r = Math.min(255, Math.max(0, r));
+                g = Math.min(255, Math.max(0, g));
+                b = Math.min(255, Math.max(0, b));
+
+                argb[yp] = 0xff000000 | (r << 16) | (g << 8) | b;
+            }
+        }
+
+        return Bitmap.createBitmap(argb, width, height, Bitmap.Config.ARGB_8888);
+    }
+
+
 }
