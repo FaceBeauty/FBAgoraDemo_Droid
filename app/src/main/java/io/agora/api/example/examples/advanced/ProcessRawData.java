@@ -39,6 +39,7 @@ import com.nimo.facebeauty.model.FBFormatEnum;
 import com.nimo.facebeauty.model.FBItemEnum;
 import com.nimo.facebeauty.model.FBRotationEnum;
 import com.nimo.fb_effect.FBPanelLayout;
+import com.nimo.fb_effect.fragment.FBARStickerFragment;
 import com.nimo.fb_effect.model.FBViewState;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.runtime.Permission;
@@ -267,6 +268,7 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
         fl_local.addView(FBPanelLayout,
             new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         FBPanelLayout.showPanel(FBViewState.BEAUTY);
+//        FBPanelLayout.showPanel(FBViewState.STICKER);
         //todo --- facebeauty end
 
         // Setup local video to render your local camera preview
@@ -326,7 +328,7 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
 
         public boolean onCaptureVideoFrame(int sourceType, VideoFrame videoFrame) {
             Log.i(TAG, "OnEncodedVideoImageReceived" + Thread.currentThread().getName());
-
+//            FBEffect.shareInstance().setARItem(1,"fb_mask_purple");
             long startTime = System.currentTimeMillis();
             Buffer buffer = videoFrame.getBuffer();
 
@@ -376,7 +378,7 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
 
                     // 初始化渲染器
                     if (!isRenderInit) {
-                        FBEffect.shareInstance().setFaceDetectorTye(1);
+                       // FBEffect.shareInstance().setFaceDetectorTye(1);
                         isRenderInit = FBEffect.shareInstance().initBufferRenderer(FBFormatEnum.FBFormatNV21, width, height, FBRotationEnum.FBRotationClockwise270, isFrontCamera, 5);
                     }
 

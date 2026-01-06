@@ -369,6 +369,7 @@ public class PushExternalVideo extends BaseFragment implements View.OnClickListe
                 }
             });
             VideoFrame frame = new VideoFrame(buffer, 0, 0);
+            Log.d("gao", "onFrameAvailable: -----");
             /*Pushes the video frame using the AgoraVideoFrame class and passes the video frame to the Agora SDK.
              * Call the setExternalVideoSource method and set pushMode as true before calling this
              * method. Otherwise, a failure returns after calling this method.
