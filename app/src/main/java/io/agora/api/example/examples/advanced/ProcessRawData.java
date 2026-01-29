@@ -267,8 +267,10 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
         FBPanelLayout = new FBPanelLayout(getContext()).init(getActivity().getSupportFragmentManager());
         fl_local.addView(FBPanelLayout,
             new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        FBPanelLayout.showPanel(FBViewState.BEAUTY);
-//        FBPanelLayout.showPanel(FBViewState.STICKER);
+        FBPanelLayout.showPanel(FBViewState.BEAUTY);//美颜-美型-滤镜
+//        FBPanelLayout.showPanel(FBViewState.LIGHT_MAKEUP);//轻彩妆
+//        FBPanelLayout.showPanel(FBViewState.MASK);//面具
+//        FBPanelLayout.showPanel(FBViewState.STICKER);//贴纸
         //todo --- facebeauty end
 
         // Setup local video to render your local camera preview
@@ -374,7 +376,8 @@ public class ProcessRawData extends BaseFragment implements View.OnClickListener
                     backBuffer.get(backData);
                     byte[] nv21 = backData;
 
-                    Log.d(TAG, "VideoFrame to nv21 --- consume time: " + (System.currentTimeMillis() - startTime) + "ms");
+//                    Log.d(TAG, "VideoFrame to nv21 --- consume time: " + (System.currentTimeMillis() - startTime) + "ms");
+                    Log.d(TAG, "VideoFrame  --- isTracking: " +FBEffect.shareInstance().isTracking());
 
                     // 初始化渲染器
                     if (!isRenderInit) {

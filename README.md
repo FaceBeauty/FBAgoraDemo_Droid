@@ -17,6 +17,7 @@ After downloading, open project
 - Replace **assets** in fbui folder with your **assets**
 - Build, Run, and search **init-status** to see relevant logs
 - The specific execution steps can be viewed by searching **//todo --- facebeauty** globally
+- The main steps of beauty rendering are in the 'processrawdata' file
 
 <br/>
 

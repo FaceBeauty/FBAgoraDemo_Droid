@@ -17,6 +17,7 @@
 - 将fbui模块中的**assets**替换为您的**assets**
 - 编译，运行，日志搜索**init-status**可以查看相关日志
 - 具体执行步骤可以全局搜索 **//todo --- facebeauty** 进行查看
+- 美颜渲染的主要步骤在`ProcessRawData`文件中
 
 <br/>
 

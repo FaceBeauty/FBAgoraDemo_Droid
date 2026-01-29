@@ -89,33 +89,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-
-    if(new File("${localSdkPath}").exists()){
-        implementation fileTree(dir: "${localSdkPath}", include: ['*.jar', '*.aar'])
-    }
-    else {
-
-        // case 1: full libs
-        implementation "io.agora.rtc:full-sdk:${agoraSdkVersion}"
-        implementation "io.agora.rtc:full-screen-sharing:${agoraSdkVersion}"
-        // case 2: partial libs
-        // implementation "io.agora.rtc:full-rtc-basic:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:ains:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:full-content-inspect:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:full-virtual-background:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:full-super-resolution:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:spatial-audio:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:audio-beauty:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:clear-vision:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:pvc:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:screen-capture:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:aiaec:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:drm-loader:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:drm:${agoraSdkVersion}"
-        // implementation "io.agora.rtc:full-vqa:${agoraSdkVersion}"
-    }
-
-
+    implementation "io.agora.rtc:full-sdk:${agoraSdkVersion}"
+    implementation "io.agora.rtc:full-screen-sharing:${agoraSdkVersion}"
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 

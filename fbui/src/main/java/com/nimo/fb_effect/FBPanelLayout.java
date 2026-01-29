@@ -35,6 +35,7 @@
   import com.nimo.fb_effect.fragment.FBARStickerFragment;
   import com.nimo.fb_effect.fragment.FBBeautyFragment;
   import com.nimo.fb_effect.fragment.FBWatermarkFragment;
+  import com.nimo.fb_effect.fragment.LightMakeupFragment;
   import com.nimo.fb_effect.fragment.MakeUpItemFragment;
   import com.nimo.fb_effect.model.FBEventAction;
   import com.nimo.fb_effect.model.FBViewState;
@@ -549,8 +550,6 @@
           switchModePanel(new FBARStickerFragment(),"sticker");
           FBState.currentViewState = viewState;
           FBState.currentSecondViewState = FBViewState.STICKER;
-          Log.e("--sticker--",viewState.name());
-          //setTakePhotoAnim(-280);
           break;
 
         case MASK:
@@ -562,8 +561,6 @@
           switchModePanel(new FBARMaskFragment(),"mask");
           FBState.currentViewState = viewState;
           FBState.currentSecondViewState = FBViewState.MASK;
-          Log.e("--mask--",viewState.name());
-          //setTakePhotoAnim(-280);
           break;
         case AR:
           ivFbTrigger.setVisibility(GONE);
@@ -577,6 +574,17 @@
           Log.e("--change_Panel==AR--",viewState.name());
           //setTakePhotoAnim(-280);
           break;
+          case LIGHT_MAKEUP:
+              ivFbTrigger.setVisibility(View.GONE);
+              ivFbRestore.setVisibility(View.GONE);
+              shutterIv.setVisibility(View.VISIBLE);
+              btnShutter.setVisibility(View.GONE);
+              stickerView.setVisibility(VISIBLE);
+              switchModePanel(new LightMakeupFragment(),"light_makeup");
+              FBState.currentViewState = viewState;
+              FBState.currentSecondViewState = FBViewState.LIGHT_MAKEUP;
+              break;
+
       }
 
     }
